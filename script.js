@@ -102,26 +102,59 @@ function moveNoButton() {
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
 
-    // Calculate safe zone to avoid placing button
+    // Add margin from edges to keep button fully visible
+    const margin = 20;
+    const maxX = viewportWidth - btnWidth - margin;
+    const maxY = viewportHeight - btnHeight - margin;
+
+    // Calculate safe zone to avoid placing button too close to Yes button
     const yesRect = yesBtn.getBoundingClientRect();
-    const safeMargin = 100;
+    const safeDistance = 150;
 
     let newX, newY;
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 20;
+    let foundGoodPosition = false;
 
-    // Try to find a position that's not too close to the Yes button
-    do {
-        newX = Math.random() * (viewportWidth - btnWidth - 40) + 20;
-        newY = Math.random() * (viewportHeight - btnHeight - 40) + 20;
+    // Try to find a position that's not too close to the Yes button and is within bounds
+    while (attempts < maxAttempts && !foundGoodPosition) {
+        // Generate random position within safe bounds
+        newX = Math.random() * (maxX - margin) + margin;
+        newY = Math.random() * (maxY - margin) + margin;
+
+        // Calculate distance from Yes button center
+        const yesCenterX = yesRect.left + yesRect.width / 2;
+        const yesCenterY = yesRect.top + yesRect.height / 2;
+        const btnCenterX = newX + btnWidth / 2;
+        const btnCenterY = newY + btnHeight / 2;
+
+        const distance = Math.sqrt(
+            Math.pow(btnCenterX - yesCenterX, 2) +
+            Math.pow(btnCenterY - yesCenterY, 2)
+        );
+
+        // Check if position is good (far enough from Yes button and within bounds)
+        if (distance > safeDistance && newX >= margin && newY >= margin && newX <= maxX && newY <= maxY) {
+            foundGoodPosition = true;
+        }
+
         attempts++;
-    } while (
-        attempts < maxAttempts &&
-        newX > yesRect.left - safeMargin &&
-        newX < yesRect.right + safeMargin &&
-        newY > yesRect.top - safeMargin &&
-        newY < yesRect.bottom + safeMargin
-    );
+    }
+
+    // If we couldn't find a good position, just place it in a safe corner
+    if (!foundGoodPosition) {
+        const corners = [
+            { x: margin, y: margin }, // top-left
+            { x: maxX, y: margin }, // top-right
+            { x: margin, y: maxY }, // bottom-left
+            { x: maxX, y: maxY }  // bottom-right
+        ];
+
+        // Pick a random corner
+        const corner = corners[Math.floor(Math.random() * corners.length)];
+        newX = corner.x;
+        newY = corner.y;
+    }
 
     noBtn.style.left = newX + 'px';
     noBtn.style.top = newY + 'px';
