@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="A Special Valentine's Day Message for Ashley">
+    <meta property="og:description" content="Will you be my Valentine? 💕">
+    <meta property="og:type" content="website">
+    <title>For Ashley 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="sparkles-container" id="sparklesContainer"></div>
+
+    <div class="container">
+        <div class="content" id="mainContent">
+            <h1 class="title">Ashley,</h1>
+            <h2 class="question">Will you be my Valentine? 💕</h2>
+
+            <div class="buttons">
+                <button class="btn btn-yes" id="yesBtn">Yes! 💖</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div class="success-message hidden" id="successMessage">
+            <h1 class="celebration">🎉 Yay! 🎉</h1>
+            <p class="success-text">You've made me the happiest person! 💕</p>
+            <p class="romantic-text">I can't wait to spend this Valentine's Day with you! ❤️</p>
+        </div>
+    </div>
+
+    <button class="music-toggle" id="musicToggle" title="Toggle music">
+        🎵
+    </button>
+
+    <audio id="backgroundMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_5c1d0d8c76.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
